@@ -44,7 +44,8 @@ app.get('/',(req,res)=>{
     code.pipe(res);
 })
 
-app.get('/home',(req,res)=>{
+app.get('/home/:id',(req,res)=>{
+    const id = req.params.id;
     res.sendFile(__dirname+"/index.html");
 });
 

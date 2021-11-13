@@ -23,6 +23,7 @@ io.on('connection',(cliente)=>{
     console.log("ID: "+cliente.id);
    cliente.on('info_Cliente',(info)=>{
        console.log(info.nome);
+       cliente.broadcast.emit('cn',"conectado");
    })
 
    cliente.on('online',(status)=>{

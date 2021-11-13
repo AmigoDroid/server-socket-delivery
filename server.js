@@ -31,6 +31,7 @@ io.on('connection',(cliente)=>{
    })
 
 
+   
 })
 app.get('/',(req,res)=>{
     const obj = {

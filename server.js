@@ -18,18 +18,18 @@ let mes = data.getMonth();
 let ano = data.getFullYear();
 
 const porta  = process.env.PORT||8080;
-
+var msg ='';
 io.on('connection',(cliente)=>{
 
     console.log("ID: "+cliente.id);
    
     cliente.on('info_Cliente',(info)=>{
         //canal novo
-        cliente.emit(info.id,`Data: ${dia}/${mes}/${ano}`);
+    cliente.on(info.id,(db)=>{
+        cliente.broadcast.emit(info.id,db)
+    })
+        
         //enviar msg para esse c  canal n ovo
-        cliente.on(info.id,dados=>{
-            cliente.to(info.id).emit(dados);
-        })
         
    })
 

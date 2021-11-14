@@ -13,7 +13,7 @@
     <h1>soket cliente</h1>
     <div id='root'></div>
 
-    <button onclick="ok">enviar</button>
+    <button onclick="ok()">enviar</button>
     <script>
         const sk = io();
         const info={
@@ -28,9 +28,17 @@
                 console.log("Canal info: "+inf);
             })
 
+            const dados={
+                nome:'Luciano',
+                rua:'senador sarney',
+                numero:'405',
+                pedido:'espetinho completo'
+            }
             //novo canal
-            sk.emit(info.id,info);
-            
+            function ok(){
+                console.log('ok');
+            sk.emit(info.id,JSON.stringify(dados));
+            }
     </script>
 </body>
 </html>

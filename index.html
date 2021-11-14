@@ -41,8 +41,20 @@
 
             //novo canal
             sk.on(info.id,tg=>{
-                console.log("Canal novo: "+tg);
+                const sd = JSON.parse(tg);
+                renderPedido(sd);
             })
+            function renderPedido(dados){
+                document.getElementById('root').innerHTML+=
+                `
+                <h1>Nome: ${dados.nome}</h1>
+                <h3>Rua: ${dados.rua} </h3>
+                <h3>Numero: ${dados.numero}</h3>
+
+
+
+                `;
+            }
           
     </script>
 </body>

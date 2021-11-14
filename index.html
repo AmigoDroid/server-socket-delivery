@@ -21,41 +21,29 @@
     <!--SCRIPT-->
     <script>
         const sk = io();
-        const qrcode = document.getElementById('imgQR');
-
-
-       window.onload=function(){
-           console.log('teste');
-       }
-
-
-     
-
-
-
-
-
-
-
-
-
-
-
+        //const qrcode = document.getElementById('imgQR');
 
         sk.on('connection',(cliente)=>{
-
-         
+           
         })
+        //MINHAS INFORMAÇÕES
         const info={
-                nome:'luciano',
-                idade:22
+                id:localStorage.getItem('idLoja'),
+                token:localStorage.getItem('token'),
+                nome:'Luciano'
             }
+            //mandar informações para o server
             sk.emit('info_Cliente',info);
-const statusobj ={
-    online:true,
-    id:sk.id
-}
-        sk.broadcast.emit('online',statusobj);
+
+            //ouvir resposta
+            sk.on('info_Cliente',inf=>{
+                console.log("Canal info: "+inf);
+            })
+
+            //novo canal
+            sk.on(info.nome,tg=>{
+                console.log("Canal novo: "+tg);
+            })
           
     </script>
 </body>

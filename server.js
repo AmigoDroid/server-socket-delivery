@@ -20,10 +20,15 @@ let ano = data.getFullYear();
 const porta  = process.env.PORT||8080;
 
 io.on('connection',(cliente)=>{
+
     console.log("ID: "+cliente.id);
-   cliente.on('info_Cliente',(info)=>{
-       console.log(info.nome);
-       cliente.broadcast.emit('cn',"conectado");
+   
+    cliente.on('info_Cliente',(info)=>{
+
+        cliente.emit(info.id,`Data: ${dia}/${mes}/${ano}`);
+
+       console.log(info);
+
    })
 
    cliente.on('online',(status)=>{
@@ -31,7 +36,7 @@ io.on('connection',(cliente)=>{
    })
 
 
-   
+
 })
 app.get('/',(req,res)=>{
     const obj = {

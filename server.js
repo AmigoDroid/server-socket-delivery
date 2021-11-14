@@ -26,7 +26,7 @@ io.on('connection',(cliente)=>{
     cliente.on('info_Cliente',(info)=>{
         //canal novo
     cliente.on(info.id,(db)=>{
-        cliente.broadcast.emit(info.id,db)
+        cliente.emit(info.id,db)
     })
         
         //enviar msg para esse c  canal n ovo

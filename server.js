@@ -24,11 +24,13 @@ io.on('connection',(cliente)=>{
     console.log("ID: "+cliente.id);
    
     cliente.on('info_Cliente',(info)=>{
-
+        //canal novo
         cliente.emit(info.id,`Data: ${dia}/${mes}/${ano}`);
-
-       console.log(info);
-
+        //enviar msg para esse c  canal n ovo
+        cliente.on(info.id,dados=>{
+            cliente.to(info.id).emit(dados);
+        })
+        
    })
 
    cliente.on('online',(status)=>{

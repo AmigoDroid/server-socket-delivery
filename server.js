@@ -25,7 +25,7 @@ io.on('connection',(cliente)=>{
    
     cliente.on('info_Cliente',(info)=>{
 
-        cliente.emit(info.idLoja,`Data: ${dia}/${mes}/${ano}`);
+        cliente.emit(info.id,`Data: ${dia}/${mes}/${ano}`);
 
        console.log(info);
 

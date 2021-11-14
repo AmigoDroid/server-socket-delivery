@@ -54,6 +54,10 @@ app.get('/home/:id',(req,res)=>{
     const id = req.params.id;
     res.sendFile(__dirname+"/index.html");
 });
+app.get('/cliente/:id',(req,res)=>{
+    const id = req.params.id;
+    res.sendFile(__dirname+'/cliente.html');
+});
 
 
 http.listen(porta,()=>{

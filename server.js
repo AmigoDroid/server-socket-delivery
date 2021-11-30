@@ -40,7 +40,7 @@ io.on('connection',(cliente)=>{
 
 
 })
-app.get('/',(req,res)=>{
+app.get('/QRcode',(req,res)=>{
     const obj = {
         id:idA(),
         nome:'nome',

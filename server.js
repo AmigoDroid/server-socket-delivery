@@ -16,9 +16,12 @@ const data = new Date();
 let dia = data.getDate();
 let mes = data.getMonth();
 let ano = data.getFullYear();
+let dataCompleta=`${dia}/${mes}/${ano}`;
 
 const porta  = process.env.PORT||8080;
 var msg ='';
+const dataProsses=[];
+
 io.on('connection',(cliente)=>{
 
     console.log("ID: "+cliente.id);
@@ -27,6 +30,16 @@ io.on('connection',(cliente)=>{
        //ouvindo
 
    })
+
+   cliente.on('pedido',(quem)=>{
+       //salvar o pedido no tempo de execução
+       dataProsses.push(quem);
+       console.log(quem);
+    
+       cliente.broadcast.emit('allPedidos',dataProsses);
+
+   })
+
 
    cliente.on('disconnect',(ig)=>{
        console.log('desconectado: '+ig.id);

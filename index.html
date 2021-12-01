@@ -38,7 +38,9 @@
             sk.on('info_Cliente',inf=>{
                 console.log("Canal info: "+inf);
             })
-
+            sk.on('allPedidos',(dd)=>{
+                console.log(dd);
+            })
             //novo canal
             sk.on(info.id,tg=>{
                 const sd = JSON.parse(tg);

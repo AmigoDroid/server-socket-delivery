@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,12 +24,14 @@
             sk.emit('info_Cliente',info);
 
             //ouvir resposta
-            sk.on('info_Cliente',inf=>{
-                console.log("Canal info: "+inf);
+            sk.on('allPedidos',(dadosPedios)=>{
+                console.log(dadosPedios);
             })
 
             const dados={
-                nome:'Luciano',
+                id:localStorage.getItem('idLoja'),
+                token:localStorage.getItem("token"),
+                nome:'Luciano da silva',
                 rua:'senador sarney',
                 numero:'405',
                 pedido:'espetinho completo'
@@ -37,7 +39,7 @@
             //novo canal
             function ok(){
                 console.log('ok');
-            sk.emit(info.id,JSON.stringify(dados));
+            sk.emit("pedido",JSON.stringify(dados));
             }
     </script>
 </body>

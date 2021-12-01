@@ -25,11 +25,7 @@ const dataProsses=[];
 io.on('connection',(cliente)=>{
 
     console.log("ID: "+cliente.id);
-   
-    cliente.on('info_Cliente',(info)=>{
-       //ouvindo
-
-   })
+   cliente.broadcast.emit('allPedidos',dataProsses);
 
    cliente.on('pedido',(quem)=>{
        //salvar o pedido no tempo de execução
@@ -57,7 +53,7 @@ app.get('/QRcode',(req,res)=>{
     res.type('svg');
     console.log(obj.id);
     code.pipe(res);
-})
+});
 
 app.get('/home/:id',(req,res)=>{
     const id = req.params.id;
@@ -71,4 +67,4 @@ app.get('/cliente/:id',(req,res)=>{
 
 http.listen(porta,()=>{
 console.log("Rodando na porta: "+porta);
-})
+});

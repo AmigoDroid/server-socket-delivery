@@ -16,13 +16,6 @@
     <button onclick="ok()">enviar</button>
     <script>
         const sk = io();
-        const info = {
-                id:localStorage.getItem('idLoja'),
-                token:localStorage.getItem('token'),
-            }
-            //mandar informações para o server
-            sk.emit('info_Cliente',info);
-
             //ouvir resposta
             sk.on('allPedidos',(dadosPedios)=>{
                 console.log(dadosPedios);
@@ -38,7 +31,6 @@
             }
             //novo canal
             function ok(){
-                console.log('ok');
             sk.emit("pedido",JSON.stringify(dados));
             }
     </script>

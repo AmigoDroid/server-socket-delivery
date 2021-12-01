@@ -16,45 +16,42 @@
 </head>
 <body>
     <h1>soket</h1>
+
     <div id='root'></div>
 
     <!--SCRIPT-->
     <script>
+
         const sk = io();
         //const qrcode = document.getElementById('imgQR');
 
-        sk.on('connection',(cliente)=>{
-           
-        })
-        //MINHAS INFORMAÇÕES
-        const info={
-                id:localStorage.getItem('idLoja'),
-                token:localStorage.getItem('token'),
-            }
-            //mandar informações para o server
-            sk.emit('info_Cliente',info);
+            const myid = localStorage.getItem('lojaId');
+            sk.on('connection',(cliente)=>{
+                console.log('conectado');
+            });
 
-            //ouvir resposta
-            sk.on('info_Cliente',inf=>{
-                console.log("Canal info: "+inf);
-            })
             sk.on('allPedidos',(dd)=>{
-                console.log(dd);
+                console.log('all pedidos');
+               const db = dd;
+               document.getElementById('root').innerHTML='';
+
+               for(let i =0;i<db.length;i++){
+
+                   let obj = JSON.parse(db[i]);
+
+                   if(obj.id==myid){
+
+                      renderPedido(obj);
+                   }
+               }
+
             })
             //novo canal
-            sk.on(info.id,tg=>{
-                const sd = JSON.parse(tg);
-                renderPedido(sd);
-            })
             function renderPedido(dados){
                 document.getElementById('root').innerHTML+=
-                `
-                <h1>Nome: ${dados.nome}</h1>
+               `<h1>Nome: ${dados.nome}</h1>
                 <h3>Rua: ${dados.rua} </h3>
                 <h3>Numero: ${dados.numero}</h3>
-
-
-
                 `;
             }
           

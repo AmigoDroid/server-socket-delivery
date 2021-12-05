@@ -22,10 +22,10 @@
     <script>
         console.log('html:ativo');
         const soket =io(""+location);
+        console.log(location);
 
-
-        soket.on('dados',(dataCliente)=>{
-            console.table(dataCliente);
+        soket.on('teste',(dataCliente)=>{
+            console.log(dataCliente);
         })
         //RENDERIZAR PEDIDO
             function renderPedido(dados){

@@ -21,6 +21,8 @@ var datamsg =[];
 
         console.log('conectado: id='+socket.id);
         
+        socket.broadcast.emit('teste',"olá mundo");
+        
         });
 
     

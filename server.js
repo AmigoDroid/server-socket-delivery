@@ -5,7 +5,7 @@ const path  = require('path');
 
 const app = express();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const io = require('socket.io')(server,{cors:{origin:"*"}});
 
 const PORT = process.env.PORT;
 
@@ -24,9 +24,6 @@ var datamsg =[];
         socket.broadcast.emit('teste',"olá mundo");
         
         });
-
-    
-
 
 app.get('/home/:id',(req,res)=>{
     const id = req.params.id;

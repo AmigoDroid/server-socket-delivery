@@ -28,7 +28,8 @@ var datamsg =[];
     
 
 
-app.get('/',(req,res)=>{
+app.get('/home/:id',(req,res)=>{
+    const id = req.params.id;
     res.render('index');
 });
 

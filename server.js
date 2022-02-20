@@ -6,6 +6,9 @@ const path  = require('path');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server,{cors:{origin:"*"}});
+const jwt = require('jsonwebtoken');
+const secret = 'JLAcessoriosToken';
+const verify = require('./verify');
 
 const PORT = process.env.PORT;
 
@@ -20,10 +23,16 @@ var datamsg =[];
     io.on('connection', socket =>{
 
         console.log('conectado: id='+socket.id);
-        
-        socket.broadcast.emit('teste',"olá mundo");
+        socket.emit('teste','olá mundo');
+
+        socket.on('pedidos',(objs)=>{
+           
+            console.log(objs);
+            io.emit('Pedidos',objs);
+        });
         
         });
+        
 
 app.get('/home/:id',(req,res)=>{
     const id = req.params.id;

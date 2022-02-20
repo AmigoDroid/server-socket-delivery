@@ -23,7 +23,7 @@ var datamsg =[];
     io.on('connection', socket =>{
 
         console.log('conectado: id='+socket.id);
-        socket.emit('teste','olá mundo');
+        socket.emit('teste','Conected Server');
 
         socket.on('pedidos',(objs)=>{
            

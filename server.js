@@ -11,14 +11,20 @@ const secret = 'JLAcessoriosToken';
 
 const verify = require('./verify');
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT ||5500;
 
 app.use(express.static(path.join(__dirname,'public')));
 app.set('views',path.join(__dirname,"public"));
 app.engine('html',require('ejs').renderFile);
 app.set('view engine','html');
 
+const dbOnline=[];
+
     io.on('connection', socket =>{
+        dbOnline.push(socket.id);
+        // console.log(dbOnline.length);
+
+        io.emit('ONLINE',dbOnline.length);
 
         console.log('conectado: id='+socket.id);
         socket.emit('teste','Conected Server');
@@ -40,6 +46,15 @@ app.set('view engine','html');
             }
 
         });
+
+        socket.on('disconnect',()=>{
+            console.log("desconect "+socket.id);
+            dbOnline.splice(dbOnline.indexOf(socket.id),1);
+
+            io.emit('ONLINE',dbOnline.length);
+            
+            // console.log(dbOnline.length);
+        })
         
         });
         //respondendo para o cliente o resultado do pedido
@@ -53,10 +68,6 @@ app.set('view engine','html');
             io.emit(token,resposta);
             console.log('============================');
         }
-
-
-
-
 
 app.get('/home/:id',(req,res)=>{
     const id = req.params.id;

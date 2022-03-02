@@ -95,7 +95,7 @@ const dadosCoxesion={
 
         function atualizar(){
             const conection = dadosCoxesion;
-            io.emit('ONLINE',{online:conection.online.length,cliente:conection.clientes.length,admin:conection.admins.length});
+            io.emit('ONLINE',{online:conection.online,cliente:conection.clientes,admin:conection.admins});
         }
 
 app.get('/home/:id',(req,res)=>{

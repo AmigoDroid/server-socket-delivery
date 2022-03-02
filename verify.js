@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = 'chave-58242660'
+const secret = process.env.SECRET_KEY;
 module.exports ={
      teste() {
          console.log('Testando Server...');

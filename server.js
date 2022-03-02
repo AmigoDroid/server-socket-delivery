@@ -22,34 +22,22 @@ app.set('view engine','html');
 const dbOnline=[];
 const DBlistCliente=[];
 const adminListOnline=[];
-const dadosCoxesion={
-    online:{},
-    clientes:{},
-    admins:{}
-
-}
 
     io.on('connection', socket =>{
         // console.log(dbOnline.length);
         console.log('conectado: id='+socket.id);
 
         socket.emit('teste','Conected Server');
-        //login paia
+
         socket.on('logar',(obj)=>{
-
             const res= obj;
-
             if(res=='admin'){
-
-               dadosCoxesion.admins['admin']={id:socket.id};
+                adminListOnline.push(socket.id);
                 atualizar();
-
             }else{
-
-                dadosCoxesion.clientes[obj]={id:socket.id};
-                dadosCoxesion.online[socket.id]={id:socket.id};
+                DBlistCliente.push(obj);
+                dbOnline.push(socket.id);
                 atualizar();
-
             }
         })
         socket.on('pedidos',(objs)=>{
@@ -71,11 +59,11 @@ const dadosCoxesion={
         socket.on('disconnect',()=>{
             console.log("desconect "+socket.id);
 
-            delete dadosCoxesion.online[socket.id];
-            delete dadosCoxesion.admins[socket.id];
-            // dbOnline.splice(dbOnline.indexOf(socket.id),1);
+            // delete dadosCoxesion.online[socket.id];
+            // delete dadosCoxesion.admins[socket.id];
+            dbOnline.splice(dbOnline.indexOf(socket.id),1);
 
-            // adminListOnline.splice(adminListOnline.indexOf(socket.id),1);
+            adminListOnline.splice(adminListOnline.indexOf(socket.id),1);
             atualizar();
             
             // console.log(dbOnline.length);
@@ -95,10 +83,8 @@ const dadosCoxesion={
         }
 
         function atualizar(){
-            const jso = JSON.parse(dadosCoxesion.online);
-            const conection = dadosCoxesion;
-            io.emit('ONLINE',{online:conection.online,cliente:conection.clientes,admin:conection.admins,JS:jso});
-        }
+            io.emit('ONLINE',{online:dbOnline.length,cliente:DBlistCliente.length,admin:adminListOnline.length});
+         }
 
 app.get('/home/:id',(req,res)=>{
     const id = req.params.id;

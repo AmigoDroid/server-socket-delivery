@@ -31,8 +31,8 @@ const adminListOnline=[];
         socket.on('logar',(obj)=>{
             const res= obj;
             if(res=='admin'){
-                atualizar();
                 adminListOnline.push(socket.id);
+                atualizar();
             }else{
                 DBlistCliente.push(obj);
                 dbOnline.push(socket.id);

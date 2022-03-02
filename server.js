@@ -29,8 +29,8 @@ const adminListOnline=[];
         socket.emit('teste','Conected Server');
 
         socket.on('logar',(obj)=>{
-            atualizar();
-            if(obj=='admin'){
+            const res= obj;
+            if(res=='admin'){
                 atualizar();
                 adminListOnline.push(socket.id);
             }else{

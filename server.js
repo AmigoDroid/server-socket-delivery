@@ -21,22 +21,34 @@ app.set('view engine','html');
 const dbOnline=[];
 const DBlistCliente=[];
 const adminListOnline=[];
+const dadosCoxesion={
+    online:{},
+    clientes:{},
+    admins:{}
+
+}
 
     io.on('connection', socket =>{
         // console.log(dbOnline.length);
         console.log('conectado: id='+socket.id);
 
         socket.emit('teste','Conected Server');
-
+        //login paia
         socket.on('logar',(obj)=>{
+
             const res= obj;
+
             if(res=='admin'){
-                adminListOnline.push(socket.id);
+
+               dadosCoxesion.admins['admin']={id:socket.id};
                 atualizar();
+
             }else{
-                DBlistCliente[obj]={id:socket.id};
-                dbOnline.push(socket.id);
+
+                dadosCoxesion.clientes[obj]={id:socket.id};
+                dadosCoxesion.online[socket.id]={id:socket.id};
                 atualizar();
+
             }
         })
         socket.on('pedidos',(objs)=>{
@@ -57,9 +69,12 @@ const adminListOnline=[];
 
         socket.on('disconnect',()=>{
             console.log("desconect "+socket.id);
-            dbOnline.splice(dbOnline.indexOf(socket.id),1);
 
-            adminListOnline.splice(adminListOnline.indexOf(socket.id),1);
+            delete dadosCoxesion.online[socket.id];
+            delete dadosCoxesion.admins[socket.id];
+            // dbOnline.splice(dbOnline.indexOf(socket.id),1);
+
+            // adminListOnline.splice(adminListOnline.indexOf(socket.id),1);
             atualizar();
             
             // console.log(dbOnline.length);
@@ -79,7 +94,8 @@ const adminListOnline=[];
         }
 
         function atualizar(){
-            io.emit('ONLINE',{online:dbOnline.length,cliente:DBlistCliente,admin:adminListOnline.length});
+            const conection = dadosCoxesion;
+            io.emit('ONLINE',{online:conection.online.length,cliente:conection.clientes.length,admin:conection.admins.length});
         }
 
 app.get('/home/:id',(req,res)=>{

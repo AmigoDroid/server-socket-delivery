@@ -34,7 +34,7 @@ const adminListOnline=[];
                 adminListOnline.push(socket.id);
                 atualizar();
             }else{
-                DBlistCliente.push(obj);
+                DBlistCliente[obj]={id:socket.id};
                 dbOnline.push(socket.id);
                 atualizar();
             }
@@ -45,7 +45,6 @@ const adminListOnline=[];
            
             //verificando pedido
             const verifyResult = verify.verificar(objs);
-         
             //verificando resultado do pedido
             if(verifyResult){
                 pedidoFeito(true,objs.token)

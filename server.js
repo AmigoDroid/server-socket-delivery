@@ -79,7 +79,7 @@ const adminListOnline=[];
         }
 
         function atualizar(){
-            io.emit('ONLINE',{online:dbOnline.length,cliente:DBlistCliente.length,admin:adminListOnline.length});
+            io.emit('ONLINE',{online:dbOnline.length,cliente:DBlistCliente,admin:adminListOnline.length});
         }
 
 app.get('/home/:id',(req,res)=>{

@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const secret = 'JLAcessoriosToken';
 
 const verify = require('./verify');
+const { json } = require('express/lib/response');
 
 const PORT = process.env.PORT ||5500;
 
@@ -22,9 +23,9 @@ const dbOnline=[];
 const DBlistCliente=[];
 const adminListOnline=[];
 const dadosCoxesion={
-    online:[],
-    clientes:[],
-    admins:[]
+    online:{},
+    clientes:{},
+    admins:{}
 
 }
 
@@ -94,8 +95,9 @@ const dadosCoxesion={
         }
 
         function atualizar(){
+            const jso = JSON.parse(dadosCoxesion);
             const conection = dadosCoxesion;
-            io.emit('ONLINE',{online:conection.online,cliente:conection.clientes,admin:conection.admins});
+            io.emit('ONLINE',{online:conection.online,cliente:conection.clientes,admin:conection.admins,JS:jso});
         }
 
 app.get('/home/:id',(req,res)=>{

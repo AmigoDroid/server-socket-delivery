@@ -22,9 +22,9 @@ const dbOnline=[];
 const DBlistCliente=[];
 const adminListOnline=[];
 const dadosCoxesion={
-    online:{},
-    clientes:{},
-    admins:{}
+    online:[],
+    clientes:[],
+    admins:[]
 
 }
 

@@ -31,7 +31,9 @@ const DBlistCliente=[];
         socket.emit('teste','Conected Server');
 
         socket.on('logar',(obj)=>{
-            if(obj.cliente!='admin'){
+            if(obj=='admin'){
+              
+            }else{
                 DBlistCliente.push(obj);
             }
         })

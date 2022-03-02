@@ -20,6 +20,7 @@ app.set('view engine','html');
 
 const dbOnline=[];
 const DBlistCliente=[];
+const adminListOnline=[];
 
     io.on('connection', socket =>{
         // console.log(dbOnline.length);
@@ -31,6 +32,7 @@ const DBlistCliente=[];
             atualizar();
             if(obj=='admin'){
                 atualizar();
+                adminListOnline.push(socket.id);
             }else{
                 DBlistCliente.push(obj);
                 dbOnline.push(socket.id);
@@ -58,6 +60,7 @@ const DBlistCliente=[];
             console.log("desconect "+socket.id);
             dbOnline.splice(dbOnline.indexOf(socket.id),1);
 
+            adminListOnline.splice(adminListOnline.indexOf(socket.id),1);
             atualizar();
             
             // console.log(dbOnline.length);
@@ -77,7 +80,7 @@ const DBlistCliente=[];
         }
 
         function atualizar(){
-            io.emit('ONLINE',{online:dbOnline.length,cliente:DBlistCliente.length});
+            io.emit('ONLINE',{online:dbOnline.length,cliente:DBlistCliente.length,admin:adminListOnline.length});
         }
 
 app.get('/home/:id',(req,res)=>{

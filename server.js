@@ -24,13 +24,13 @@ const DBlistCliente=[];
     io.on('connection', socket =>{
         dbOnline.push(socket.id);
         // console.log(dbOnline.length);
-
-        io.emit('ONLINE',{online:dbOnline.length,cliente:DBlistCliente.length});
+        atualizar();
 
         console.log('conectado: id='+socket.id);
         socket.emit('teste','Conected Server');
 
         socket.on('logar',(obj)=>{
+            atualizar();
             if(obj=='admin'){
               
             }else{
@@ -38,10 +38,9 @@ const DBlistCliente=[];
             }
         })
         socket.on('pedidos',(objs)=>{
-
+            
             console.log('novo pedido!');
            
-            
             //verificando pedido
             const verifyResult = verify.verificar(objs);
          
@@ -59,7 +58,7 @@ const DBlistCliente=[];
             console.log("desconect "+socket.id);
             dbOnline.splice(dbOnline.indexOf(socket.id),1);
 
-            io.emit('ONLINE',{online:dbOnline.length,cliente:DBlistCliente.length});
+            atualizar();
             
             // console.log(dbOnline.length);
         })
@@ -75,6 +74,10 @@ const DBlistCliente=[];
             }
             io.emit(token,resposta);
             console.log('============================');
+        }
+
+        function atualizar(){
+            io.emit('ONLINE',{online:dbOnline.length,cliente:DBlistCliente.length});
         }
 
 app.get('/home/:id',(req,res)=>{

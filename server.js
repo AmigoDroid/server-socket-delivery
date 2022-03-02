@@ -31,7 +31,7 @@ const DBlistCliente=[];
             atualizar();
             if(obj=='admin'){
                 atualizar();
-            }else{teste
+            }else{
                 DBlistCliente.push(obj);
                 dbOnline.push(socket.id);
                 atualizar();

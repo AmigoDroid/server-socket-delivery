@@ -95,7 +95,7 @@ const dadosCoxesion={
         }
 
         function atualizar(){
-            const jso = JSON.parse(dadosCoxesion);
+            const jso = JSON.parse(dadosCoxesion.online);
             const conection = dadosCoxesion;
             io.emit('ONLINE',{online:conection.online,cliente:conection.clientes,admin:conection.admins,JS:jso});
         }

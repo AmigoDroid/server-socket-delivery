@@ -22,19 +22,19 @@ const dbOnline=[];
 const DBlistCliente=[];
 
     io.on('connection', socket =>{
-        dbOnline.push(socket.id);
         // console.log(dbOnline.length);
-        atualizar();
-
         console.log('conectado: id='+socket.id);
+
         socket.emit('teste','Conected Server');
 
         socket.on('logar',(obj)=>{
             atualizar();
             if(obj=='admin'){
-              
-            }else{
+                atualizar();
+            }else{teste
                 DBlistCliente.push(obj);
+                dbOnline.push(socket.id);
+                atualizar();
             }
         })
         socket.on('pedidos',(objs)=>{

@@ -19,16 +19,22 @@ app.engine('html',require('ejs').renderFile);
 app.set('view engine','html');
 
 const dbOnline=[];
+const DBlistCliente=[];
 
     io.on('connection', socket =>{
         dbOnline.push(socket.id);
         // console.log(dbOnline.length);
 
-        io.emit('ONLINE',dbOnline.length);
+        io.emit('ONLINE',{online:dbOnline.length,cliente:DBlistCliente.length});
 
         console.log('conectado: id='+socket.id);
         socket.emit('teste','Conected Server');
 
+        socket.on('logar',(obj)=>{
+            if(obj.cliente!='admin'){
+                DBlistCliente.push(obj);
+            }
+        })
         socket.on('pedidos',(objs)=>{
 
             console.log('novo pedido!');
@@ -51,7 +57,7 @@ const dbOnline=[];
             console.log("desconect "+socket.id);
             dbOnline.splice(dbOnline.indexOf(socket.id),1);
 
-            io.emit('ONLINE',dbOnline.length);
+            io.emit('ONLINE',{online:dbOnline.length,cliente:DBlistCliente.length});
             
             // console.log(dbOnline.length);
         })

@@ -58,10 +58,17 @@ const adminListOnline=[];
 
         });
         socket.on('login', user =>{
-            const res = clientDB.login(user);
-            socket.emit('response',res);
+          
+            console.log('============');
+            logando(user);
 
         })
+
+        async function logando(user){
+            const res = await clientDB.login(user);
+            console.log(res);
+            socket.emit('response',res);
+        }
 
         socket.on('disconnect',()=>{
             console.log("desconect "+socket.id);
@@ -78,6 +85,7 @@ const adminListOnline=[];
         
         });
         //respondendo para o cliente o resultado do pedido
+       
         function pedidoFeito(estado,token){
 
             const resposta = {

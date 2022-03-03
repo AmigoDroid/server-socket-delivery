@@ -18,7 +18,7 @@ module.exports = {
         //const db = JSON.parse(user)
         const num = user.length;
         if (user.length <= 0) {
-            return res.json({ status: false })
+            return { status: false }
         } else {
             for (let i = 0; i < num; i++) {
                 console.log(1+i + "/" + num);

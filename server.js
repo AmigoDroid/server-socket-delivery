@@ -58,7 +58,7 @@ const adminListOnline=[];
 
         });
         socket.on('login', user =>{
-            const res = await clientDB.login(user);
+            const res = clientDB.login(user);
             socket.emit('response',res);
 
         })

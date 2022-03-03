@@ -11,6 +11,8 @@ const secret = 'JLAcessoriosToken';
 
 const verify = require('./verify');
 const { json } = require('express/lib/response');
+const { Socket } = require('socket.io');
+const clientDB = require('./database/client/clientDB');
 
 const PORT = process.env.PORT ||5500;
 
@@ -55,6 +57,11 @@ const adminListOnline=[];
             }
 
         });
+        socket.on('login', user =>{
+            const res = clientDB.login(user);
+            socket.emit('response',res);
+
+        })
 
         socket.on('disconnect',()=>{
             console.log("desconect "+socket.id);

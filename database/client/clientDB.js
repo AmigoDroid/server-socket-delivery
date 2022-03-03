@@ -7,8 +7,8 @@ const secret = process.env.SECRET_KEY;
  
 
 module.exports = {
-    async login(re, res) {
-        const dados = re.body;
+    async login(obj) {
+        const dados = obj;
         const tel = dados.telefone;
         const pass = dados.password;
 
@@ -24,10 +24,10 @@ module.exports = {
                 console.log(1+i + "/" + num);
                 if (user[i].telefone == tel && user[i].password == pass) {
                     const token = jwt.sign({userId:user.id},secret,{expiresIn:28800});
-                    return res.json({ status: true,token:token});
+                    return { status: true,token:token};
                     break;
                 } else if (i + 1 >= num) {
-                    return res.json({ status: false })
+                    return { status: false };
                     break;
                 }
             }

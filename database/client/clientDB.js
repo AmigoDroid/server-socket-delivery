@@ -11,6 +11,7 @@ module.exports = {
         const dados = obj;
         const tel = dados.telefone;
         const pass = dados.password;
+        var res;
 
         console.log(dados);
         //
@@ -18,20 +19,21 @@ module.exports = {
         //const db = JSON.parse(user)
         const num = user.length;
         if (user.length <= 0) {
-            return { status: false }
+            res = { status: false }
         } else {
             for (let i = 0; i < num; i++) {
                 console.log(1+i + "/" + num);
                 if (user[i].telefone == tel && user[i].password == pass) {
                     const token = jwt.sign({userId:user.id},secret,{expiresIn:28800});
-                    return { status: true,token:token};
+                   res = { status: true,token:token};
                     break;
                 } else if (i + 1 >= num) {
-                    return { status: false };
+                    res = { status: false };
                     break;
                 }
             }
         }
+        return res;
     },
     async idLoja(req,res){
         const id = req.params.id;

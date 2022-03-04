@@ -4,26 +4,24 @@ const path  = require('path');
 
 //funciona
 const app = express();
+// const jwt = require('jsonwebtoken');
+// const secret = 'JLAcessoriosToken';
 const server = require('http').createServer(app);
 const io = require('socket.io')(server,{cors:{origin:"*"}});
-const jwt = require('jsonwebtoken');
-const secret = 'JLAcessoriosToken';
-
 const verify = require('./verify');
-const { json } = require('express/lib/response');
-const { Socket } = require('socket.io');
 const clientDB = require('./database/client/clientDB');
 
+
 const PORT = process.env.PORT ||5500;
+const ws = require('./socket.io');
 
 app.use(express.static(path.join(__dirname,'public')));
 app.set('views',path.join(__dirname,"public"));
 app.engine('html',require('ejs').renderFile);
 app.set('view engine','html');
 
-const dbOnline=[];
-const DBlistCliente=[];
-const adminListOnline=[];
+
+
 
     io.on('connection', socket =>{
         // console.log(dbOnline.length);
@@ -31,32 +29,24 @@ const adminListOnline=[];
 
         socket.emit('teste','Conected Server');
 
-        socket.on('logar',(obj)=>{
-            const res= obj;
-            if(res=='admin'){
-                adminListOnline.push(socket.id);
-                atualizar();
-            }else{
-                DBlistCliente.push(obj);
-                dbOnline.push(socket.id);
-                atualizar();
-            }
+        socket.on('tokenVerify',token=>{
+            const ressp = verify.verifyToken(token);
+            socket.emit('validateToken',ressp);
         })
+
+        socket.on('logar',(obj)=>{
+              ws.logar(obj,socket.id);
+               atualizar();
+        })
+
         socket.on('pedidos',(objs)=>{
             
             console.log('novo pedido!');
-           
-            //verificando pedido
-            const verifyResult = verify.verificar(objs);
-            //verificando resultado do pedido
-            if(verifyResult){
-                pedidoFeito(true,objs.token)
-                io.emit("ConectId:"+objs.idLoja,objs)
-            }else{
-                pedidoFeito(false,objs.token)
-            }
+            const verifyRes = verify.verificar(objs);
+            veryResult(verifyRes,objs)
 
         });
+        
         socket.on('login', user =>{
           
             console.log('============');
@@ -70,18 +60,23 @@ const adminListOnline=[];
             socket.emit('response',res);
         }
 
+        function veryResult(boolean,objs){
+            if(boolean){
+                pedidoFeito(true,token);
+                io.emit("ConectId:"+objs.idLoja,objs)
+            }else{
+                pedidoFeito(false,objs.token)
+            }
+        }
+
         socket.on('disconnect',()=>{
             console.log("desconect "+socket.id);
 
-            // delete dadosCoxesion.online[socket.id];
-            // delete dadosCoxesion.admins[socket.id];
-            dbOnline.splice(dbOnline.indexOf(socket.id),1);
-
-            adminListOnline.splice(adminListOnline.indexOf(socket.id),1);
+            ws.desconectado(socket.id);
             atualizar();
             
             // console.log(dbOnline.length);
-        })
+        });
         
         });
         //respondendo para o cliente o resultado do pedido
@@ -98,8 +93,13 @@ const adminListOnline=[];
         }
 
         function atualizar(){
-            io.emit('ONLINE',{online:dbOnline.length,cliente:DBlistCliente.length,admin:adminListOnline.length});
+            const  {admin,cliente,online} = ws.dadosOnline();
+            io.emit('ONLINE',{cliente:cliente,admin:admin,online:online});
          }
+
+
+
+
 
 app.get('/home/:id',(req,res)=>{
     const id = req.params.id;

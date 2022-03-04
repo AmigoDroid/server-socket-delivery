@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = process.env.SECRET_KEY;
+const secret = process.env.SECRET_KEY || "keyteste-api-v1.0";
 module.exports ={
      teste() {
          console.log('Testando Server...');

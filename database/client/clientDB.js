@@ -2,7 +2,7 @@ const cliente_user = require('../config/clientes_users');
 const clienteStore = require('../config/clientes_stores');
 const db = require('../config/db');
 const jwt = require('jsonwebtoken');
-const secret = process.env.SECRET_KEY || "chave-58242660";
+const secret = process.env.SECRET_KEY || "keyteste-api-v1.0";
 
  
 

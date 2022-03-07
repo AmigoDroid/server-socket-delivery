@@ -1,4 +1,5 @@
 const clientDB = require('./database/client/clientDB');
+const socket = require('./server');
 
 const Online=[];
 const Clientes=[];
@@ -6,13 +7,14 @@ const adminOnline=[];
 
 module.exports = { 
 
-    logar(obj,id){
+    conect(obj,id){
        const res= obj;
       if(res=='admin'){
         adminOnline.push(id);
       }else{
         Clientes.push(obj);
         Online.push(id);
+      
     }
 },
     desconectado(id){

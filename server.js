@@ -27,6 +27,10 @@ const ws = require('./socket.io');
                emitir('falha','ocorreu um erro desconhecido');
            }
         });
+
+        socket.on('login_Loja',obj=>{
+            loginLoja(obj);
+        })
     
     
         socket.on('disconnect',()=>{
@@ -37,16 +41,16 @@ const ws = require('./socket.io');
             atualizar();
         });
 
-
+        function emitir(emit,obj){
+            socket.emit(emit,obj);
+        }
         });
 
 
         //========FUNÇÕES===========//
 
 
-        function emitir(emit,obj){
-            io.emit(emit,obj);
-        }
+        
         function atualizar(){
             const  {admin,cliente,online} = ws.dadosOnline();
             emitir('ONLINE',{cliente:cliente,admin:admin,online:online});
@@ -55,6 +59,10 @@ const ws = require('./socket.io');
             const res = await clientDB.login(user);
             console.log(res);
             emitir('resLogin',res);
+        }
+        async function loginLoja(obj){
+            const res = await clientDB.loginLoja(obj);
+            emitir('resLoja',res)
         }
 
         //rota de erro 404

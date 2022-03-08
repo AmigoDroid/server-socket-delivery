@@ -1,5 +1,5 @@
 
-const express = require('express')
+const express = require('express');
 const path  = require('path');
 const app = express();
 const server = require('http').createServer(app);
@@ -63,6 +63,10 @@ const ws = require('./socket.io');
         async function loginLoja(obj){
             const res = await clientDB.loginLoja(obj);
             emitir('res_Loja',res)
+            if(res.login){
+                socket.join(res.nome);
+                console.log('SOCKET MOVIDO PARA A SALA '+res.nome);
+            }
         }
 
     });

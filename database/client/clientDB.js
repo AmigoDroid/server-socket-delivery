@@ -94,7 +94,7 @@ module.exports = {
 
                     const token = jwt.sign({userId:user.id},secret,{expiresIn:28800});
                     
-                     res =  { login: true,token:token};
+                     res =  { login: true,token:token,nome:user[i].nome};
                     break;
                 } else if (i + 1 >= num) {
                    

@@ -41,14 +41,14 @@ const ws = require('./socket.io');
             atualizar();
         });
 
-        function emitir(emit,obj){
-            socket.emit(emit,obj);
-        }
-        });
-
-
-        //========FUNÇÕES===========//
-
+    });
+    
+    
+    //========FUNÇÕES===========//
+    
+    function emitir(emit,obj){
+        io.emit(emit,obj);
+    }
 
         
         function atualizar(){
@@ -62,7 +62,7 @@ const ws = require('./socket.io');
         }
         async function loginLoja(obj){
             const res = await clientDB.loginLoja(obj);
-            emitir('resLoja',res)
+            emitir('res_Loja',res)
         }
 
         //rota de erro 404

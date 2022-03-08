@@ -78,7 +78,7 @@ module.exports = {
         const dados = req;
         const tel = dados.username;
         const pass = dados.password;
-        let res;
+        var res;
 
         console.log(dados);
         //
@@ -91,7 +91,7 @@ module.exports = {
             for (let i = 0; i < num; i++) {
                 console.log(1+i + "/" + num);
                 if (user[i].username == tel && user[i].password == pass) {
-                    
+
                     const token = jwt.sign({userId:user.id},secret,{expiresIn:28800});
                     
                      res =  { login: true,token:token};
@@ -102,5 +102,8 @@ module.exports = {
                     break;
                 }
             }
-        }
-    }}
+        }  return res;
+    } 
+
+  
+}

@@ -41,13 +41,13 @@ const ws = require('./socket.io');
             atualizar();
         });
 
-    });
-    
-    
+
+
+          
     //========FUNÇÕES===========//
     
     function emitir(emit,obj){
-        io.emit(emit,obj);
+        socket.emit(emit,obj);
     }
 
         
@@ -64,6 +64,10 @@ const ws = require('./socket.io');
             const res = await clientDB.loginLoja(obj);
             emitir('res_Loja',res)
         }
+
+    });
+    
+  
 
         //rota de erro 404
         app.use(function(req, res, next) {

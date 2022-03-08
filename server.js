@@ -62,11 +62,11 @@ const ws = require('./socket.io');
         }
         async function loginLoja(obj){
             const res = await clientDB.loginLoja(obj);
-            emitir('res_Loja',res)
             if(res.login){
                 socket.join(res.nome);
                 console.log('SOCKET MOVIDO PARA A SALA '+res.nome);
             }
+            emitir('res_Loja',res)
         }
 
     });

@@ -52,6 +52,7 @@ const ws = require('./socket.io');
             if(res){
                 MSala(obj.nomeLoja)
                 emitir('Res_Pedir',body)
+                emitir('pedidos',obj);
 
             }
         })

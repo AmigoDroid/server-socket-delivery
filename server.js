@@ -41,6 +41,21 @@ const ws = require('./socket.io');
             atualizar();
         });
 
+        socket.on('Pedir',obj=>{
+            const token = obj.token;
+            const res = verify.verifyToken(token);
+            const body={
+                estado:res,
+                msgV:'Pedido Realizado!',
+                msgF:'Ocorreu um erro!'
+            }
+            if(res){
+                MSala(obj.nomeLoja)
+                emitir('Res_Pedir',body)
+
+            }
+        })
+
 
 
           
@@ -48,6 +63,9 @@ const ws = require('./socket.io');
     
     function emitir(emit,obj){
         socket.emit(emit,obj);
+    }
+    function MSala(sala){
+        socket.join(sala);
     }
 
         

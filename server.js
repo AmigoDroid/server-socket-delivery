@@ -14,8 +14,11 @@ const ws = require('./socket.io');
 
 
     io.on('connection', socket =>{
+        console.log('conected:'+socket.id);
+        socket.emit('teste','Olá Mundo!');
         
         socket.on('login',obj=>{
+            console.log('login...');
             login(obj);
         });
 
@@ -29,6 +32,7 @@ const ws = require('./socket.io');
         });
 
         socket.on('login_Loja',obj=>{
+            console.log('login loja...');
             loginLoja(obj);
         })
     
